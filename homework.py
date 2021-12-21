@@ -78,7 +78,7 @@ class Running(Training):
         """Получить количество затраченных калорий."""
         coeff_calorie_1: float = 18
         coeff_calorie_2: float = 20
-        spent_calories = ((coeff_calorie_1 * self.get_mean_speed()
+        spent_calories = (((coeff_calorie_1 * self.get_mean_speed())
                           - coeff_calorie_2) * self.weight /
                           self.M_IN_KM * self.duration_minutes)
         return spent_calories
@@ -123,7 +123,7 @@ class Swimming(Training):
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
-        mean_speed = (self.length_pool * self.count_pool /
+        mean_speed = ((self.length_pool * self.count_pool) /
                       self.M_IN_KM / self.duration)
         return mean_speed
 
