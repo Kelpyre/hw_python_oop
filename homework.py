@@ -17,18 +17,18 @@ class InfoMessage:
 
     # так понял вынос фразы в константу класса
     TRAINING_MSG: str = 'Тип тренировки: '
-    DURATION_MSG: str = 'Длительность: '
-    DISTANCE_MSG: str = 'Дистанция: '
-    M_SPEED_MSG: str = 'Ср. скорость: '
-    CALORIES_MSG: str = 'Потрачено ккал: '
+    DURATION_MSG: str = '; Длительность: '
+    DISTANCE_MSG: str = ' ч.; Дистанция: '
+    M_SPEED_MSG: str = ' км; Ср. скорость: '
+    CALORIES_MSG: str = ' км/ч; Потрачено ккал: '
 
     def get_message(self) -> str:
         """Вывести информационное сообщение"""
         output: str = (
-            f'{self.TRAINING_MSG}{self.training_type}; '
-            f'{self.DURATION_MSG}{self.duration:.3f} ч.; '
-            f'{self.DISTANCE_MSG}{self.distance:.3f} км; '
-            f'{self.M_SPEED_MSG}{self.speed:.3f} км/ч; '
+            f'{self.TRAINING_MSG}{self.training_type}'
+            f'{self.DURATION_MSG}{self.duration:.3f}'
+            f'{self.DISTANCE_MSG}{self.distance:.3f}'
+            f'{self.M_SPEED_MSG}{self.speed:.3f}'
             f'{self.CALORIES_MSG}{self.calories:.3f}.'
         )
         return output
