@@ -128,13 +128,9 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    dict = {'SWM' : Swimming, 'RUN' : Running, 'WLK' : SportsWalking}
-    for key_word in dict:
-        if key_word is workout_type:
-            Object = dict[key_word](*data)
-        else:
-            pass
-    return Object
+    dict_class = {'SWM' : Swimming, 'RUN' : Running, 'WLK' : SportsWalking}
+    object_class = dict_class[workout_type](*data)
+    return object_class
     #pass
 
 
