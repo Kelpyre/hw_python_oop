@@ -15,21 +15,22 @@ class InfoMessage:
     speed: float
     calories: float
 
-    # так понял вынос фразы в константу класса
-    TRAINING_MSG: str = 'Тип тренировки: '
-    DURATION_MSG: str = '; Длительность: '
-    DISTANCE_MSG: str = ' ч.; Дистанция: '
-    M_SPEED_MSG: str = ' км; Ср. скорость: '
-    CALORIES_MSG: str = ' км/ч; Потрачено ккал: '
+    OUTPUT_MSG: str = (
+        'Тип тренировки: {}; '
+        'Длительность: {} ч.; '
+        'Дистанция: {} км; '
+        'Ср. скорость: {} км/ч; '
+        'Потрачено ккал: {}'
+    )
 
     def get_message(self) -> str:
         """Вывести информационное сообщение"""
-        output: str = (
-            f'{self.TRAINING_MSG}{self.training_type}'
-            f'{self.DURATION_MSG}{self.duration:.3f}'
-            f'{self.DISTANCE_MSG}{self.distance:.3f}'
-            f'{self.M_SPEED_MSG}{self.speed:.3f}'
-            f'{self.CALORIES_MSG}{self.calories:.3f}.'
+        output: str = self.OUTPUT_MSG.format(
+            f'{self.training_type}',
+            f'{self.duration:.3f}',
+            f'{self.distance:.3f}',
+            f'{self.speed:.3f}',
+            f'{self.calories:.3f}.'
         )
         return output
 
@@ -40,6 +41,7 @@ class Training:
     LEN_STEP: float = 0.65
     M_IN_KM: float = 1000
     MIN_IN_HOUR: int = 60
+    IMP_ERR_MSG: str = ('Метод {} не имплементирован в дочерний класс {}!')
 
     def __init__(
             self,
@@ -64,7 +66,10 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        raise NotImplementedError
+        raise NotImplementedError(self.IMP_ERR_MSG.format(
+            'self.get_spent_calories()', f'{type(self).__name__}'
+        )
+        )
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -167,16 +172,18 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
+    VALUE_ERR_MSG: str = 'Неизвестный тип тренировки!'
+
     dict_class: dict[str, Type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
         'WLK': SportsWalking
     }
-    if workout_type in dict_class.keys():
+    if workout_type in dict_class:
         object_class: Training = dict_class[workout_type](*data)
+        return object_class
     else:
-        raise ValueError('Неизвестный тип тренировки!')
-    return object_class
+        raise ValueError(VALUE_ERR_MSG)
 
 
 def main(training: Training) -> None:
@@ -187,7 +194,7 @@ def main(training: Training) -> None:
 
 
 if __name__ == '__main__':
-    packages: list = [
+    packages: list[tuple[str, list[int]]] = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
