@@ -182,8 +182,7 @@ def read_package(workout_type: str, data: list) -> Training:
     if workout_type in dict_class:
         object_class: Training = dict_class[workout_type](*data)
         return object_class
-    else:
-        raise ValueError(VALUE_ERR_MSG)
+    raise ValueError(VALUE_ERR_MSG)
 
 
 def main(training: Training) -> None:
