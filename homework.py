@@ -8,7 +8,6 @@ from typing import Type
 class InfoMessage:
     """Информационное сообщение о тренировке."""
 
-    # pytest обязывает иметь переменную duration в InfoMessage
     training_type: str
     duration: float
     distance: float
